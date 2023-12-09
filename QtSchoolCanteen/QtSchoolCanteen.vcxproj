@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="database.cpp" />
     <ClCompile Include="loginWindow.cpp" />
     <ClCompile Include="users.cpp" />
     <QtRcc Include="mainWindow.qrc" />
@@ -100,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="loginWindow.h" />
+    <ClInclude Include="database.h" />
     <ClInclude Include="users.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

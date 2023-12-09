@@ -3,6 +3,8 @@
 #include <QMainWindow>
 #include "ui_loginWindow.h"
 
+#include "database.h"
+
 class loginWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -14,4 +16,5 @@ public:
 
 private:
 	Ui::loginWindowClass ui;
+	QVector<user*> databaseUser;
 };

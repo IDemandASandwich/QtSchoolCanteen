@@ -82,7 +82,7 @@
        </spacer>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="comboBox"/>
+       <widget class="QComboBox" name="comboBoxUsers"/>
       </item>
       <item row="2" column="2">
        <spacer name="horizontalSpacer_2">
@@ -108,7 +108,7 @@
        </widget>
       </item>
       <item row="3" column="1" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="checkBoxShowPassword">
         <property name="text">
          <string>Show password</string>
         </property>
