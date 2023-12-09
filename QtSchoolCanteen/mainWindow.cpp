@@ -1,6 +1,6 @@
 #include "mainWindow.h"
 
-mainWindow::mainWindow(QWidget *parent)
+mainWindow::mainWindow(bool isAdmin, QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);

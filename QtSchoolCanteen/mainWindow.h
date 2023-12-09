@@ -10,7 +10,7 @@ class mainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    mainWindow(QWidget *parent = nullptr);
+    mainWindow(bool isAdmin = false, QWidget *parent = nullptr);
     ~mainWindow();
 
 private:

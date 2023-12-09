@@ -7,6 +7,8 @@
 
 #include "users.h"
 
+//singleton pattern : only one instance of database can be created
+
 class database
 {
 public:
