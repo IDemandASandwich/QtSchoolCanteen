@@ -42,7 +42,7 @@ bool database::loadDatabaseUser() {
         if (userType == "employee") {
             QString name       = data[1].trimmed();
             QString password   = data[2].trimmed();
-            int credit         = data[3].toInt();
+            double credit         = data[3].toDouble();
             QString department = data[4].trimmed();
 
             databaseUser.push_back(new employee(name, password, credit, department));
@@ -50,7 +50,7 @@ bool database::loadDatabaseUser() {
         else if (userType == "student") {
             QString name     = data[1].trimmed();
             QString password = data[2].trimmed();
-            int credit       = data[3].toInt();
+            double credit       = data[3].toDouble();
             QString field    = data[4].trimmed();
             int discount     = data[5].toInt();
 
@@ -59,7 +59,7 @@ bool database::loadDatabaseUser() {
         else if (userType == "staff") {
             QString name     = data[1].trimmed();
             QString password = data[2].trimmed();
-            int credit       = data[3].toInt();
+            double credit       = data[3].toDouble();
             QString position = data[4].trimmed();
 
             staff::jobs staffPosition = staff::none;

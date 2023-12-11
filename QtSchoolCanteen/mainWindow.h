@@ -19,9 +19,12 @@ public:
 
 private slots:
     void pushButtonLogOut_clicked();
+    void tableWidgetMenu_doubleClicked(int row, int column);
+    void listWidgetOrders_doubleClicked(QListWidgetItem* item);
 
 private:
     Ui::mainWindowClass ui;
     QVector<user*> databaseUser;
+    user* currentUser;
     menuDataType databaseMenu;
 };
