@@ -1,6 +1,6 @@
 #pragma once
 
-#define DEBUG
+//#define DEBUG
 #define PRINT_PASSWORDS
 
 #include <QMainWindow>

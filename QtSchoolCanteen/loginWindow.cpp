@@ -15,7 +15,8 @@ loginWindow::loginWindow(QWidget *parent)
 }
 
 loginWindow::~loginWindow()
-{}
+{
+}
 
 void loginWindow::setup()
 {
@@ -51,12 +52,14 @@ void loginWindow::pushButtonLogin_Clicked()
 	{
 		if (user->getName() == name && user->getPassword() == password)
 		{
+			int id = ui.comboBoxUsers->currentIndex();
+
 			if (user->getPosition() == staff::admin) {
-				mainWindow* m = new mainWindow(true);
+				mainWindow* m = new mainWindow(id ,true);
 				m->show();
 			}
 			else {
-				mainWindow* m = new mainWindow;
+				mainWindow* m = new mainWindow(id);
 				m->show();
 			}
 

@@ -2,6 +2,7 @@
 
 database::database() {
     loadDatabaseUser();
+    loadDatabaseMenu();
 }
 
 database::~database() {
@@ -19,52 +20,96 @@ QVector<user*>& database::getDatabaseUser() {
 }
 
 bool database::loadDatabaseUser() {
-    QFile file("items/databaseUser.txt");
+    QFile file("items/databaseUser.csv");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return false;
 
     QTextStream in(&file);
-    while (!in.atEnd()) {
-        QString job = in.readLine();
 
-        if (job == "employee") {
-            QString name = in.readLine();
-            QString password = in.readLine();
-            int credit = in.readLine().toInt();
-            QString department = in.readLine();
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+
+        if (line.isEmpty())
+            continue;
+
+        QStringList data = line.split(',');
+
+        QString userType = data[0].trimmed();
+
+        if (userType.isEmpty())
+            continue;
+
+        if (userType == "employee") {
+            QString name       = data[1].trimmed();
+            QString password   = data[2].trimmed();
+            int credit         = data[3].toInt();
+            QString department = data[4].trimmed();
 
             databaseUser.push_back(new employee(name, password, credit, department));
         }
-        else if (job == "student") {
-            QString name = in.readLine();
-            QString password = in.readLine();
-            int credit = in.readLine().toInt();
-            QString field = in.readLine();
-            int discount = in.readLine().toInt();
+        else if (userType == "student") {
+            QString name     = data[1].trimmed();
+            QString password = data[2].trimmed();
+            int credit       = data[3].toInt();
+            QString field    = data[4].trimmed();
+            int discount     = data[5].toInt();
 
             databaseUser.push_back(new student(name, password, credit, field, discount));
         }
-        else if (job == "staff") {
-            QString name = in.readLine();
-            QString password = in.readLine();
-            int credit = in.readLine().toInt();
-            QString position = in.readLine();
+        else if (userType == "staff") {
+            QString name     = data[1].trimmed();
+            QString password = data[2].trimmed();
+            int credit       = data[3].toInt();
+            QString position = data[4].trimmed();
+
+            staff::jobs staffPosition = staff::none;
 
             if (position == "cashier")
-                databaseUser.push_back(new staff(name, password, credit, cashier));
+                staffPosition = staff::cashier;
             else if (position == "cook")
-                databaseUser.push_back(new staff(name, password, credit, cook));
+                staffPosition = staff::cook;
             else if (position == "helper")
-                databaseUser.push_back(new staff(name, password, credit, helper));
+                staffPosition = staff::helper;
             else if (position == "admin")
-                databaseUser.push_back(new staff(name, password, credit, admin));
-            else
-                databaseUser.push_back(new staff(name, password, credit, none));
-        }
+                staffPosition = staff::admin;
 
-        in.skipWhiteSpace();
+            databaseUser.push_back(new staff(name, password, credit, staffPosition));
+        }
     }
 
     file.close();
-    return true;
+    return in.status() == QTextStream::Ok;
+}
+
+bool database::loadDatabaseMenu() {
+    QFile file("items/databaseMenu.csv");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return false;
+
+    QTextStream in(&file);
+
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        
+        if (line == "Day,Course,Food Name,Price,Count")
+            continue;
+        else if (line.isEmpty())
+            continue;
+
+        QStringList data = line.split(',');
+
+        Food currentFood;
+        currentFood.name = data.at(2);
+        currentFood.price = data.at(3).toDouble();
+        currentFood.quantity = data.at(4).toInt();
+
+        databaseMenu[data.at(0)][data.at(1)].push_back(currentFood);
+    }
+
+    file.close();
+    return in.status() == QTextStream::Ok;
+}
+
+menuDataType& database::getDatabaseMenu() {
+	return databaseMenu;
 }
