@@ -25,6 +25,8 @@ public:
 	QVector<user*>& getDatabaseUser();
 	bool loadDatabaseMenu();
 	menuDataType& getDatabaseMenu();
+	bool saveDatabaseUser();
+	bool saveDatabaseMenu();
 
 private:
 	QVector<user*> databaseUser;

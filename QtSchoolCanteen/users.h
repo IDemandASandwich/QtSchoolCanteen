@@ -6,7 +6,8 @@ class user
 {
 public:
 	user();
-	user(QString name, QString password, double credit);
+	user(QString userType, QString name, QString password, double credit);
+	QString getUserType() const;
 	QString getName() const;
 	QString getPassword() const;
 	double getCredit() const;
@@ -18,6 +19,7 @@ public:
 	virtual int getPosition() const = 0;
 
 private:
+	QString userType;
 	QString name;
 	QString password;
 	double credit;
@@ -27,7 +29,7 @@ private:
 class employee : public user {
 public:
 	employee();
-	employee(QString name, QString password, double credit , QString department);
+	employee(QString userType, QString name, QString password, double credit , QString department);
 	QString getDepartment() const override;
 
 	//these are not used for employees but are needed for the program to work
@@ -43,7 +45,7 @@ private:
 class student : public user {
 public:
 	student();
-	student(QString name, QString password, double credit, QString field, int discount);
+	student(QString userType, QString name, QString password, double credit, QString field, int discount);
 	QString getField() const override;
 	int getDiscount() const override;
 
@@ -60,7 +62,7 @@ private:
 class staff : public user {
 public:
 	staff();
-	staff(QString name, QString password, double credit, int position);
+	staff(QString userType, QString name, QString password, double credit, int position);
 	int getPosition() const override;
 
 	//these are not used for staff but are needed for the program to work

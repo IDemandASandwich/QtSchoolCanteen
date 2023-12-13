@@ -45,7 +45,7 @@ bool database::loadDatabaseUser() {
             double credit         = data[3].toDouble();
             QString department = data[4].trimmed();
 
-            databaseUser.push_back(new employee(name, password, credit, department));
+            databaseUser.push_back(new employee("employee", name, password, credit, department));
         }
         else if (userType == "student") {
             QString name     = data[1].trimmed();
@@ -54,7 +54,7 @@ bool database::loadDatabaseUser() {
             QString field    = data[4].trimmed();
             int discount     = data[5].toInt();
 
-            databaseUser.push_back(new student(name, password, credit, field, discount));
+            databaseUser.push_back(new student("student", name, password, credit, field, discount));
         }
         else if (userType == "staff") {
             QString name     = data[1].trimmed();
@@ -73,7 +73,7 @@ bool database::loadDatabaseUser() {
             else if (position == "admin")
                 staffPosition = staff::admin;
 
-            databaseUser.push_back(new staff(name, password, credit, staffPosition));
+            databaseUser.push_back(new staff("staff", name, password, credit, staffPosition));
         }
     }
 
@@ -112,4 +112,53 @@ bool database::loadDatabaseMenu() {
 
 menuDataType& database::getDatabaseMenu() {
 	return databaseMenu;
+}
+
+bool database::saveDatabaseUser() {
+	QFile file("items/databaseUser.csv");
+	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+		return false;
+
+	QTextStream out(&file);
+
+    for (user* u : databaseUser) {
+		out << u->getUserType() << "," << u->getName() << "," << u->getPassword() << "," << u->getCredit();
+
+        if (u->getUserType() == "student") {
+			out << "," << u->getField() << "," << u->getDiscount();
+		}
+        else if (u->getUserType() == "staff") {
+			out << "," << u->getPosition();
+		}
+        else if (u->getUserType() == "employee") {
+			out << "," << u->getDepartment();
+		}
+
+		out << "\n";
+	}
+
+	file.close();
+	return out.status() == QTextStream::Ok;
+}
+
+bool database::saveDatabaseMenu() {
+	QFile file("items/databaseMenu.csv");
+	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+		return false;
+
+	QTextStream out(&file);
+
+	out << "Day,Course,Food Name,Price,Count\n";
+
+    for (QString day : databaseMenu.keys()) {
+        for (QString course : databaseMenu[day].keys()) {
+            for (Food food : databaseMenu[day][course]) {
+				out << day << "," << course << "," << food.name << "," << food.price << "," << food.quantity << "\n";
+			}
+		}
+	}
+
+	file.close();
+
+	return out.status() == QTextStream::Ok;
 }

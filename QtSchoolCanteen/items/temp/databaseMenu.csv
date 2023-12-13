@@ -1,0 +1,76 @@
+Day,Course,Food Name,Price,Count
+Monday,Breakfast,Scrambled Eggs with Spinach and Feta,4.99,3
+Monday,Breakfast,Greek Yogurt Parfait with Granola,3.50,2
+Monday,Breakfast,Banana Nut Smoothie,5.50,1
+Monday,Breakfast,Avocado Toast with Cherry Tomatoes,6.25,2
+Monday,Breakfast,Blueberry Pancakes with Maple Syrup,4.75,1
+Tuesday,Breakfast,Oatmeal with Almonds and Dried Fruit,3.75,2
+Tuesday,Breakfast,Breakfast Burrito with Sausage and Eggs,5.25,1
+Tuesday,Breakfast,Chia Seed Pudding with Mango,4.50,2
+Tuesday,Breakfast,Peanut Butter Banana Toast,3.95,1
+Tuesday,Breakfast,Vegetable Omelette with Whole Grain Toast,6.00,2
+Wednesday,Breakfast,Smoothie Bowl with Mixed Berries and Chia Seeds,5.75,1
+Wednesday,Breakfast,Avocado and Tomato Bagel with Cream Cheese,4.25,2
+Wednesday,Breakfast,Spinach and Feta Quiche,6.50,1
+Wednesday,Breakfast,Apple Cinnamon Overnight Oats,4.95,2
+Wednesday,Breakfast,Coconut Mango Yogurt Parfait,5.80,1
+Thursday,Breakfast,Protein-Packed Breakfast Sandwich,5.25,1
+Thursday,Breakfast,Quinoa Breakfast Bowl with Berries,6.75,2
+Thursday,Breakfast,Cottage Cheese Pancakes,4.50,1
+Thursday,Breakfast,Greek Yogurt Smoothie with Pineapple and Spinach,5.80,2
+Thursday,Breakfast,Veggie Breakfast Wrap with Hummus,6.25,1
+Friday,Breakfast,Blueberry Muffins with Greek Yogurt,4.95,2
+Friday,Breakfast,Breakfast BLT Sandwich,5.50,1
+Friday,Breakfast,Banana Walnut Bread with Honey,4.25,2
+Friday,Breakfast,Smoked Salmon Bagel with Cream Cheese,6.75,1
+Friday,Breakfast,Peach and Raspberry Smoothie,5.80,2
+Monday,Lunch,Grilled Chicken Salad,8.50,1
+Monday,Lunch,Beef and Broccoli Stir-Fry,9.25,2
+Monday,Lunch,Spaghetti Carbonara,7.75,1
+Monday,Lunch,Vegetarian Lasagna,6.99,2
+Monday,Lunch,Chicken Parmesan,8.95,1
+Tuesday,Lunch,Salmon with Quinoa and Roasted Vegetables,12.99,1
+Tuesday,Lunch,Vegetable Curry with Basmati Rice,10.75,2
+Tuesday,Lunch,Salmon with Quinoa and Roasted Vegetables,13.50,1
+Tuesday,Lunch,Shrimp Pasta Primavera,11.25,2
+Tuesday,Lunch,Spaghetti Aglio e Olio with Cherry Tomatoes,10.95,1
+Wednesday,Lunch,Beef Stir-Fry with Mixed Vegetables,11.50,2
+Wednesday,Lunch,Chicken Alfredo,10.75,1
+Wednesday,Lunch,Vegetarian Stir-Fried Noodles,9.95,2
+Wednesday,Lunch,Quinoa and Black Bean Bowl,8.50,1
+Wednesday,Lunch,Grilled Chicken with Pesto Pasta,12.25,2
+Thursday,Lunch,Vegetarian Burrito Bowl,9.99,1
+Thursday,Lunch,Chicken Caesar Salad,8.75,2
+Thursday,Lunch,Chicken Piccata,11.25,1
+Thursday,Lunch,Chickpea and Spinach Curry,9.50,2
+Thursday,Lunch,Steak with Baked Potatoes and Asparagus,13.75,1
+Friday,Lunch,Vegetarian Pizza with Whole Wheat Crust,10.25,2
+Friday,Lunch,Salmon Teriyaki with Brown Rice,13.50,1
+Friday,Lunch,Chicken Fajitas with Peppers and Onions,11.99,2
+Friday,Lunch,Spinach and Feta Stuffed Chicken Breast,12.95,1
+Friday,Lunch,Vegetarian Lentil Soup with Crusty Bread,8.80,2
+Monday,Dinner,Spaghetti Bolognese,9.25,1
+Monday,Dinner,Chicken Teriyaki with Steamed Rice,10.99,2
+Monday,Dinner,Grilled Salmon with Lemon-Dill Sauce,13.75,1
+Monday,Dinner,Vegetable Stir-Fry with Tofu,8.50,2
+Monday,Dinner,Beef Tacos with Salsa and Guacamole,11.95,1
+Tuesday,Dinner,Vegetarian Lasagna,8.95,1
+Tuesday,Dinner,Beef and Vegetable Kebabs with Couscous,11.50,2
+Tuesday,Dinner,Shrimp Scampi with Linguine,14.25,1
+Tuesday,Dinner,Stuffed Bell Peppers with Quinoa,9.75,2
+Tuesday,Dinner,Chickpea and Spinach Stew,10.50,1
+Wednesday,Dinner,Chicken Alfredo Pasta,10.75,2
+Wednesday,Dinner,Baked Ziti with Tomato Sauce and Mozzarella,9.80,1
+Wednesday,Dinner,Salmon and Asparagus Foil Packets,12.50,2
+Wednesday,Dinner,Lentil and Vegetable Curry,9.95,1
+Wednesday,Dinner,Grilled Chicken Caesar Salad,11.75,2
+Thursday,Dinner,Grilled Shrimp Tacos with Cilantro-Lime Slaw,11.25,1
+Thursday,Dinner,Stuffed Acorn Squash with Quinoa and Cranberries,10.50,2
+Thursday,Dinner,Chicken Parmesan with Spaghetti,12.75,1
+Thursday,Dinner,Black Bean and Corn Quesadillas,9.95,2
+Thursday,Dinner,Steak with Mashed Potatoes and Green Beans,14.50,1
+Friday,Dinner,Mushroom and Spinach Risotto,11.80,2
+Friday,Dinner,Crispy Baked Cod with Roasted Vegetables,13.25,1
+Friday,Dinner,Vegetarian Sushi Rolls,10.99,2
+Friday,Dinner,Chickpea and Vegetable Stew,9.50,1
+Friday,Dinner,Barbecue Chicken Pizza with Whole Wheat Crust,12.95,2

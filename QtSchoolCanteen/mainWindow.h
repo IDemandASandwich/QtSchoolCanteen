@@ -16,6 +16,11 @@ public:
     void loadUser(int selectedId);
     void loadMenu();
     void setup(int selectedId, bool isAdmin = false);
+    void saveCurrentUserOrder();
+    void loadCurrentUserOrder();
+    int findListWidgetIndexInTable(QListWidgetItem* item);
+    QTableWidget* currentTable(QString day);
+    QString tableDay(QTableWidget* sender);
 
 private slots:
     void pushButtonLogOut_clicked();
@@ -24,7 +29,7 @@ private slots:
 
 private:
     Ui::mainWindowClass ui;
-    QVector<user*> databaseUser;
+    QVector<user*>& databaseUser;
     user* currentUser;
-    menuDataType databaseMenu;
+    menuDataType& databaseMenu;
 };

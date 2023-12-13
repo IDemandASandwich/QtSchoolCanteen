@@ -1,7 +1,7 @@
 #include "mainWindow.h"
 
 mainWindow::mainWindow(int selectedId, bool isAdmin, QWidget* parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent), databaseMenu(database::getInstance().getDatabaseMenu()), databaseUser(database::getInstance().getDatabaseUser())
 {
     ui.setupUi(this);
 
@@ -28,6 +28,8 @@ void mainWindow::loadUser(int selectedId) {
 
     ui.lineEditUser->setText(currentUser->getName());
     ui.doubleSpinBoxCredit->setValue(currentUser->getCredit());
+
+    loadCurrentUserOrder();
 }
 
 void mainWindow::loadMenu() {
@@ -49,7 +51,7 @@ void mainWindow::loadMenu() {
             QList foodList = databaseMenu[Day.at(currentDay)][Course.at(currentCourse)];
 
             for (int j = 0; j < foodList.size(); j++) {
-                currentWidget->insertRow(j);
+                currentWidget->insertRow(j); 
 
                 currentWidget->setItem(j, 0, new QTableWidgetItem(Course[currentCourse]));
                 currentWidget->setItem(j, 1, new QTableWidgetItem(foodList[j].name));
@@ -75,15 +77,75 @@ void mainWindow::setup(int selectedId ,bool isAdmin) {
         ui.pushButtonEditMenu->setVisible(false);
     }
 
-    database& database = database::getInstance();
-    databaseUser = database.getDatabaseUser();
-    databaseMenu = database.getDatabaseMenu();
-
-    loadUser(selectedId);
     loadMenu();
+    loadUser(selectedId);
+}
+
+void mainWindow::saveCurrentUserOrder(){
+    QString fileName = "items/" + currentUser->getName() + "Order.csv";
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    QTextStream out(&file);
+
+    for (int i = 0; i < ui.listWidgetOrder->count(); i++) {
+        QStringList data = ui.listWidgetOrder->item(i)->text().split('\t');
+        out << data[0] << "," << data[1] << "," << data[2] << "," << data[3].remove('$') << "\n";
+    }
+
+    file.close();
+}
+
+void mainWindow::loadCurrentUserOrder() {
+
+	QString fileName = "items/" + currentUser->getName() + "Order.csv";
+
+	QFile file(fileName);
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+		return;
+
+	QTextStream in(&file);
+
+    while (!in.atEnd()) {
+		QString line = in.readLine().trimmed();
+
+		if (line.isEmpty())
+			continue;
+
+        QStringList data = line.split(',');
+
+        QString day = data[0];
+        QString course = data[1];
+        QString name = data[2];
+        QString price = data[3];
+
+        QString toAdd = day + "\t" + course + "\t" + name + "\t" + price + "$";
+		
+        ui.listWidgetOrder->addItem(toAdd);
+
+        QTableWidget* table = currentTable(day);
+
+        for (int i = 0; i < table->rowCount(); i++) {
+            QString tableCourse = table->item(i, 0)->text();
+            QString tableName = table->item(i, 1)->text();
+
+            if (tableCourse == course)
+                table->hideRow(i);
+        }
+	}
+	file.close();
 }
 
 void mainWindow::pushButtonLogOut_clicked() {
+    
+    saveCurrentUserOrder();
+    
+    database& database = database::getInstance();
+    database.saveDatabaseUser();
+    database.saveDatabaseMenu();
+    
     this->close();
 
     loginWindow* l = new loginWindow;
@@ -92,19 +154,8 @@ void mainWindow::pushButtonLogOut_clicked() {
 
 void mainWindow::tableWidgetMenu_doubleClicked(int row, int column) {
     QTableWidget* senderTableWidget = qobject_cast<QTableWidget*>(sender());
-    QString day = "";
 
-    if (senderTableWidget == ui.tableWidgetMonday)
-        day = "Monday";
-    else if (senderTableWidget == ui.tableWidgetTuesday)
-        day = "Tuesday";
-    else if (senderTableWidget == ui.tableWidgetWednesday)
-        day = "Wednesday";
-    else if (senderTableWidget == ui.tableWidgetThursday)
-        day = "Thursday";
-    else if (senderTableWidget == ui.tableWidgetFriday)
-        day = "Friday";
-
+    QString day = tableDay(senderTableWidget);
     QString course = senderTableWidget->item(row, 0)->text();
     QString name = senderTableWidget->item(row, 1)->text();
     int quantity = senderTableWidget->item(row, 2)->text().toInt();
@@ -128,12 +179,15 @@ void mainWindow::tableWidgetMenu_doubleClicked(int row, int column) {
 
         currentFood->quantity -= 1;
         senderTableWidget->item(row, 2)->setText(QString::number(currentFood->quantity));
+
+        for (int i = 0; i < senderTableWidget->rowCount(); i++) {
+            if(senderTableWidget->item(i, 0)->text() == course)
+                senderTableWidget->hideRow(i);
+        }
     }
 }
 
 void mainWindow::listWidgetOrders_doubleClicked(QListWidgetItem* item) {
-    QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
-    QTableWidget* currentTableWidget;
 
     QString order = item->text();
 	QStringList orderList = order.split('\t');
@@ -143,19 +197,9 @@ void mainWindow::listWidgetOrders_doubleClicked(QListWidgetItem* item) {
 	QString name = orderList[2];
 	double price = orderList[3].remove('$').toDouble();
 
-	if (day == "Monday")
-        currentTableWidget = tableWidgets[0];
-	else if (day == "Tuesday")
-        currentTableWidget = tableWidgets[1];
-	else if (day == "Wednesday")
-        currentTableWidget = tableWidgets[2];
-	else if (day == "Thursday")
-        currentTableWidget = tableWidgets[3];
-	else if (day == "Friday")
-        currentTableWidget = tableWidgets[4];
-
-    int index = currentTableWidget->currentRow() % databaseMenu[day][course].size();
-
+    int listWidgetIndex = findListWidgetIndexInTable(item);
+    QTableWidget* currentTableWidget = currentTable(day);
+    
     for (int i = 0; i < currentTableWidget->rowCount(); i++) {
         if (currentTableWidget->item(i, 0)->text() == course && currentTableWidget->item(i, 1)->text() == name) {
 			currentTableWidget->item(i, 2)->setText(QString::number(currentTableWidget->item(i, 2)->text().toDouble() + 1));
@@ -163,9 +207,67 @@ void mainWindow::listWidgetOrders_doubleClicked(QListWidgetItem* item) {
 		}
 	}
 
-    databaseMenu[day][course][index].quantity += 1;
+    for (int i = 0; i < currentTableWidget->rowCount(); i++) {
+        if (currentTableWidget->item(i, 0)->text() == course)
+            currentTableWidget->showRow(i);
+    }
+
+    databaseMenu[day][course][listWidgetIndex].quantity += 1;
 	currentUser->addCredit(price);
 	ui.doubleSpinBoxCredit->setValue(currentUser->getCredit());
 
 	delete item;
+}
+
+int mainWindow::findListWidgetIndexInTable(QListWidgetItem* item) {
+
+    QString order = item->text();
+    QStringList orderList = order.split('\t');
+
+    QString day = orderList[0];
+    QString course = orderList[1];
+    QString name = orderList[2];
+    int listWidgetIndex = 0;
+    int tableWidgetRow = 0;
+
+    QTableWidget* currentTableWidget = currentTable(day);
+
+    for (int i = 0; i < currentTableWidget->rowCount(); i++) {
+        if (currentTableWidget->item(i, 0)->text() == course && currentTableWidget->item(i, 1)->text() == name)
+            tableWidgetRow = i;
+    }
+
+    return (tableWidgetRow % databaseMenu[day][course].size());
+}
+
+QTableWidget* mainWindow::currentTable(QString day) {
+    QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
+
+    if (day == "Monday")
+        return tableWidgets[0];
+    else if (day == "Tuesday")
+        return tableWidgets[1];
+    else if (day == "Wednesday")
+        return tableWidgets[2];
+    else if (day == "Thursday")
+        return tableWidgets[3];
+    else if (day == "Friday")
+        return tableWidgets[4];
+    else
+        return nullptr;
+};
+
+QString mainWindow::tableDay(QTableWidget* sender) {
+    if (sender == ui.tableWidgetMonday)
+        return "Monday";
+    else if (sender == ui.tableWidgetTuesday)
+        return "Tuesday";
+    else if (sender == ui.tableWidgetWednesday)
+        return "Wednesday";
+    else if (sender == ui.tableWidgetThursday)
+        return "Thursday";
+    else if (sender == ui.tableWidgetFriday)
+        return "Friday";
+    else
+        return "";
 }
