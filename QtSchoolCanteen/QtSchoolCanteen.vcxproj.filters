@@ -49,6 +49,9 @@
     <ClCompile Include="database.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="editUsers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="users.h">
@@ -62,9 +65,15 @@
     <QtMoc Include="loginWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="editUsers.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="loginWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="editUsers.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

@@ -14,13 +14,14 @@ mainWindow::mainWindow(int selectedId, bool isAdmin, QWidget* parent)
     connect(ui.tableWidgetWednesday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
     connect(ui.tableWidgetThursday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
     connect(ui.tableWidgetFriday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
+    connect(ui.pushButtonEditUsers, SIGNAL(clicked()), this, SLOT(pushButtonEditUsers_clicked()));
 
     connect(ui.listWidgetOrder, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(listWidgetOrders_doubleClicked(QListWidgetItem*)));
 }
 
 mainWindow::~mainWindow()
 {
-    //maybe a destructor since this is a pointer
+    //a connected signal will take care of deleting the mainWindow instance
 }
 
 void mainWindow::loadUser(int selectedId) {
@@ -148,8 +149,10 @@ void mainWindow::pushButtonLogOut_clicked() {
     
     this->close();
 
-    loginWindow* l = new loginWindow;
-    l->show();
+    loginWindow* loginwindow = new loginWindow;
+    loginwindow->show();
+
+    connect(loginwindow, &QObject::destroyed, this, [loginwindow]() { delete loginwindow; });	// establishes connection between the instance loginwindow and function delete
 }
 
 void mainWindow::tableWidgetMenu_doubleClicked(int row, int column) {
@@ -270,4 +273,9 @@ QString mainWindow::tableDay(QTableWidget* sender) {
         return "Friday";
     else
         return "";
+}
+
+void mainWindow::pushButtonEditUsers_clicked() {
+	editUsers* editusers = new editUsers;
+	editusers->show();
 }

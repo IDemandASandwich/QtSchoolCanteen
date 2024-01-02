@@ -5,6 +5,7 @@
 
 #include "database.h"
 #include "loginWindow.h"
+#include "editUsers.h"
 
 class mainWindow : public QMainWindow
 {
@@ -26,6 +27,7 @@ private slots:
     void pushButtonLogOut_clicked();
     void tableWidgetMenu_doubleClicked(int row, int column);
     void listWidgetOrders_doubleClicked(QListWidgetItem* item);
+    void pushButtonEditUsers_clicked();
 
 private:
     Ui::mainWindowClass ui;

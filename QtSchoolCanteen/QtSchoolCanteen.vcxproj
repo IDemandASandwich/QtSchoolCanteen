@@ -90,9 +90,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="database.cpp" />
+    <ClCompile Include="editUsers.cpp" />
     <ClCompile Include="loginWindow.cpp" />
     <ClCompile Include="users.cpp" />
     <QtRcc Include="mainWindow.qrc" />
+    <QtUic Include="editUsers.ui" />
     <QtUic Include="loginWindow.ui" />
     <QtUic Include="mainWindow.ui" />
     <QtMoc Include="mainWindow.h" />
@@ -102,6 +104,7 @@
   <ItemGroup>
     <QtMoc Include="loginWindow.h" />
     <ClInclude Include="database.h" />
+    <QtMoc Include="editUsers.h" />
     <ClInclude Include="users.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

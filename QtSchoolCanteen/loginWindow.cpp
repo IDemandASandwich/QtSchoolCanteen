@@ -1,7 +1,7 @@
 #include "loginWindow.h"
 
 loginWindow::loginWindow(QWidget *parent)
-	: QMainWindow(parent)
+	: QMainWindow(parent), databaseUser(database::getInstance().getDatabaseUser())
 {
 	setup();
 
@@ -22,9 +22,6 @@ void loginWindow::setup()
 {
 	ui.setupUi(this);
 	ui.pushButtonLogin->setEnabled(false);
-
-	database& database = database::getInstance();
-	databaseUser = database.getDatabaseUser();
 
 	for (user* user : databaseUser)
 		ui.comboBoxUsers->addItem(user->getName());
@@ -54,15 +51,18 @@ void loginWindow::pushButtonLogin_Clicked()
 		{
 			int id = ui.comboBoxUsers->currentIndex();
 
+			mainWindow* mainwindow;
+
 			if (user->getPosition() == staff::admin) {
-				mainWindow* m = new mainWindow(id ,true);
-				m->show();
+				mainwindow = new mainWindow(id ,true);
 			}
 			else {
-				mainWindow* m = new mainWindow(id);
-				m->show();
+				mainwindow = new mainWindow(id);
 			}
 
+			connect(mainwindow, &QObject::destroyed, this, [mainwindow]() { delete mainwindow; });	// establishes connection between the instance mainwindow and function delete
+
+			mainwindow->show();
 			this->close();
 			return;
 		}
