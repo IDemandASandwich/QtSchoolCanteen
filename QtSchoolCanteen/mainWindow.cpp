@@ -1,11 +1,11 @@
 #include "mainWindow.h"
 
-mainWindow::mainWindow(int selectedId, bool isAdmin, QWidget* parent)
+mainWindow::mainWindow(int selectedId, QString userType, QWidget* parent)
     : QMainWindow(parent), databaseMenu(database::getInstance().getDatabaseMenu()), databaseUser(database::getInstance().getDatabaseUser())
 {
     ui.setupUi(this);
 
-    setup(selectedId, isAdmin);
+    setup(selectedId, userType);
 
     connect(ui.pushButtonLogOut, SIGNAL(clicked()), this, SLOT(pushButtonLogOut_clicked()));
 
@@ -71,12 +71,9 @@ void mainWindow::loadMenu() {
     }
 }
 
-void mainWindow::setup(int selectedId ,bool isAdmin) {
-
-    if (!isAdmin) {
-        ui.pushButtonEditUsers->setVisible(false);
-        ui.pushButtonEditMenu->setVisible(false);
-    }
+void mainWindow::setup(int selectedId ,QString userType) {
+    ui.pushButtonEditUsers->setVisible(userType == "admin");
+    ui.pushButtonEditMenu->setVisible(userType == "admin" || userType == "cook");
 
     loadMenu();
     loadUser(selectedId);

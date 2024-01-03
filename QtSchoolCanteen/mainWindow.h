@@ -12,11 +12,11 @@ class mainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    mainWindow(int selectedId, bool isAdmin = false, QWidget* parent = nullptr);
+    mainWindow(int selectedId, QString userType = "regular", QWidget* parent = nullptr);
     ~mainWindow();
     void loadUser(int selectedId);
     void loadMenu();
-    void setup(int selectedId, bool isAdmin = false);
+    void setup(int selectedId, QString userType = "regular");
     void saveCurrentUserOrder();
     void loadCurrentUserOrder();
     int findListWidgetIndexInTable(QListWidgetItem* item);

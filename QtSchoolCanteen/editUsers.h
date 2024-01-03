@@ -14,9 +14,14 @@ class editUsers : public QMainWindow
 public:
 	editUsers(QWidget *parent = nullptr);
 	~editUsers();
+	void setup();
 
 private slots:
 	void listWidgetView_doubleClicked(QListWidgetItem*);
+	void comboBoxType_currentIndexChanged(int);
+	void pushButtonAdd_clicked();
+	void listWidgetView_clicked(QListWidgetItem*);
+	void pushButtonEdit_clicked();
 
 private:
 	Ui::editUsersClass ui;

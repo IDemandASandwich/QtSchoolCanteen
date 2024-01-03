@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>311</width>
-    <height>462</height>
+    <width>639</width>
+    <height>257</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>300</x>
       <y>10</y>
-      <width>291</width>
-      <height>371</height>
+      <width>331</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="title">
@@ -31,8 +31,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>291</width>
-       <height>371</height>
+       <width>331</width>
+       <height>171</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -45,10 +45,10 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>389</y>
-      <width>291</width>
-      <height>51</height>
+      <x>300</x>
+      <y>190</y>
+      <width>331</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="title">
@@ -57,17 +57,24 @@
     <widget class="QWidget" name="horizontalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>291</width>
-       <height>51</height>
+       <x>-1</x>
+       <y>10</y>
+       <width>331</width>
+       <height>31</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="pushButtonAdd">
         <property name="text">
          <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonEdit">
+        <property name="text">
+         <string>Edit</string>
         </property>
        </widget>
       </item>
@@ -90,6 +97,122 @@
          <string>Ok</string>
         </property>
        </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>281</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QWidget" name="formLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>281</width>
+       <height>221</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="labelType">
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboBoxType"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelName">
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEditName"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelPassword">
+        <property name="text">
+         <string>Password</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="lineEditPassword"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelCredit">
+        <property name="text">
+         <string>Credit</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="spinBoxCredit">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelDepartment">
+        <property name="text">
+         <string>Department</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="lineEditDepartment"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="labelField">
+        <property name="text">
+         <string>Field</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="lineEditField"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="labelDiscount">
+        <property name="text">
+         <string>Discount</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QSpinBox" name="spinBoxDiscount">
+        <property name="buttonSymbols">
+         <enum>QAbstractSpinBox::NoButtons</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="labelPosition">
+        <property name="text">
+         <string>Position</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QComboBox" name="comboBoxPosition"/>
       </item>
      </layout>
     </widget>

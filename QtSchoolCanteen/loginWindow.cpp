@@ -54,7 +54,10 @@ void loginWindow::pushButtonLogin_Clicked()
 			mainWindow* mainwindow;
 
 			if (user->getPosition() == staff::admin) {
-				mainwindow = new mainWindow(id ,true);
+				mainwindow = new mainWindow(id ,"admin");
+			}
+			else if (user->getPosition() == staff::cook) {
+				mainwindow = new mainWindow(id, "cook");
 			}
 			else {
 				mainwindow = new mainWindow(id);
