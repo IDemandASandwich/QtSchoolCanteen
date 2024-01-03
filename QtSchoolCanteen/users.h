@@ -17,6 +17,7 @@ public:
 	virtual QString getField() const = 0;
 	virtual int getDiscount() const = 0;
 	virtual int getPosition() const = 0;
+	virtual void editUser(QString name, QString password, double credit);
 
 private:
 	QString userType;
@@ -31,6 +32,7 @@ public:
 	employee();
 	employee(QString userType, QString name, QString password, double credit , QString department);
 	QString getDepartment() const override;
+	void editUser(QString name, QString password, double credit, QString department);
 
 	//these are not used for employees but are needed for the program to work
 	QString getField() const override { return QString(); };
@@ -48,6 +50,7 @@ public:
 	student(QString userType, QString name, QString password, double credit, QString field, int discount);
 	QString getField() const override;
 	int getDiscount() const override;
+	void editUser(QString name, QString password, double credit, QString field, int discount);
 
 	//these are not used for students but are needed for the program to work
 	QString getDepartment() const override { return QString(); };
@@ -64,6 +67,7 @@ public:
 	staff();
 	staff(QString userType, QString name, QString password, double credit, int position);
 	int getPosition() const override;
+	void editUser(QString name, QString password, double credit, int position);
 
 	//these are not used for staff but are needed for the program to work
 	QString getDepartment() const override { return QString(); };

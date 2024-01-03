@@ -23,7 +23,7 @@ void editUsers::setup() {
 	for (user* user : databaseUser)
 		ui.listWidgetView->addItem(user->getName() + "\t" + user->getUserType());
 
-	QStringList type = { "Student", "Employee", "Staff" };
+	QStringList type = { "student", "employee", "staff" };
 	ui.comboBoxType->addItems(type);
 
 	QStringList position = { "cashier", "cook", "helper", "admin" };
@@ -134,7 +134,31 @@ void editUsers::listWidgetView_clicked(QListWidgetItem* item) {
 }
 
 void editUsers::pushButtonEdit_clicked() {
+	
 	int index = ui.listWidgetView->currentRow();
 
-	
+	QString userType = ui.comboBoxType->currentText();
+	QString name = ui.lineEditName->text();
+	QString password = ui.lineEditPassword->text();
+	double credit = ui.spinBoxCredit->value();
+
+	if (userType == "student")
+	{
+		QString field = ui.lineEditField->text();
+		int discount = ui.spinBoxDiscount->value();
+
+		dynamic_cast<student*>(databaseUser[index])->editUser(name, password, credit, field, discount);
+	}
+	else if (userType == "employee")
+	{
+		QString department = ui.lineEditDepartment->text();
+
+		dynamic_cast<employee*>(databaseUser[index])->editUser(name, password, credit, department);
+	}
+	else if (userType == "staff")
+	{
+		int position = ui.comboBoxPosition->currentIndex() + 1;
+
+		dynamic_cast<staff*>(databaseUser[index])->editUser(name, password, credit, position);
+	}
 }

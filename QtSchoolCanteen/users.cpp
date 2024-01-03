@@ -17,6 +17,12 @@ double user::getCredit() const { return credit; }
 
 void user::addCredit(double amount) { credit += amount; }
 
+void user::editUser(QString name, QString password, double credit) {
+	this->name = name;
+	this->password = password;
+	this->credit = credit;
+}
+
 // employee derived class
 
 employee::employee(): user(), department(""){}
@@ -26,6 +32,10 @@ employee::employee(QString userType, QString name, QString password, double cred
 
 QString employee::getDepartment() const { return department; }
 
+void employee::editUser(QString name, QString password, double credit, QString department) {
+	user::editUser(name, password, credit);
+	this->department = department;
+}
 
 // student derived class
 
@@ -38,6 +48,12 @@ QString student::getField() const { return field; }
 
 int student::getDiscount() const { return discount; }
 
+void student::editUser(QString name, QString password, double credit, QString field, int discount) {
+	user::editUser(name, password, credit);
+	this->field = field;
+	this->discount = discount;
+}
+
 
 // staff derived class
 
@@ -47,3 +63,8 @@ staff::staff(QString userType, QString name, QString password, double credit, in
 	user(userType, name, password, credit), position(position){}
 
 int staff::getPosition() const { return position; }
+
+void staff::editUser(QString name, QString password, double credit, int position) {
+	user::editUser(name, password, credit);
+	this->position = position;
+}
