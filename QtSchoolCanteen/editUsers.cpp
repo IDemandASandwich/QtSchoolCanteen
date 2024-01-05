@@ -80,20 +80,20 @@ void editUsers::pushButtonAdd_clicked() {
 	QString password = ui.lineEditPassword->text();
 	double credit = ui.spinBoxCredit->value();
 
-	if (userType == "Student")
+	if (userType == "student")
 	{
 		QString field = ui.lineEditField->text();
 		int discount = ui.spinBoxDiscount->value();
 
 		databaseUser.push_back(new student("student", name, password, credit, field, discount));
 	}
-	else if (userType == "Employee")
+	else if (userType == "employee")
 	{
 		QString department = ui.lineEditDepartment->text();
 
 		databaseUser.push_back(new employee("employee", name, password, credit, department));
 	}
-	else if (userType == "Staff")
+	else if (userType == "staff")
 	{
 		int position = ui.comboBoxPosition->currentIndex();
 
