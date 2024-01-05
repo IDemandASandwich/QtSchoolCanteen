@@ -22,12 +22,15 @@ public:
     int findListWidgetIndexInTable(QListWidgetItem* item);
     QTableWidget* currentTable(QString day);
     QString tableDay(QTableWidget* sender);
+    void enableFoodQuantityEditing(bool enable);
+    void updateDatabaseMenu();
 
 private slots:
     void pushButtonLogOut_clicked();
     void tableWidgetMenu_doubleClicked(int row, int column);
     void listWidgetOrders_doubleClicked(QListWidgetItem* item);
     void pushButtonEditUsers_clicked();
+    void checkBoxEditMenu_stateChanged(int state);
 
 private:
     Ui::mainWindowClass ui;

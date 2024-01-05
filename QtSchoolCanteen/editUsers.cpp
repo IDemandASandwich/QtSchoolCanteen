@@ -161,4 +161,6 @@ void editUsers::pushButtonEdit_clicked() {
 
 		dynamic_cast<staff*>(databaseUser[index])->editUser(name, password, credit, position);
 	}
+
+	ui.listWidgetView->item(index)->setText(name + "\t" + userType);
 }

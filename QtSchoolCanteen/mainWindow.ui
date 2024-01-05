@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>990</width>
-    <height>630</height>
+    <width>992</width>
+    <height>637</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -114,9 +114,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButtonEditMenu">
+       <widget class="QCheckBox" name="checkBoxEditMode">
         <property name="text">
-         <string>Edit menu</string>
+         <string>Edit mode</string>
         </property>
        </widget>
       </item>

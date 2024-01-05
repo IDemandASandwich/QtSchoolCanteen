@@ -15,6 +15,7 @@ mainWindow::mainWindow(int selectedId, QString userType, QWidget* parent)
     connect(ui.tableWidgetThursday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
     connect(ui.tableWidgetFriday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
     connect(ui.pushButtonEditUsers, SIGNAL(clicked()), this, SLOT(pushButtonEditUsers_clicked()));
+    connect(ui.checkBoxEditMode, SIGNAL(stateChanged(int)), this, SLOT(checkBoxEditMenu_stateChanged(int)));
 
     connect(ui.listWidgetOrder, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(listWidgetOrders_doubleClicked(QListWidgetItem*)));
 }
@@ -73,7 +74,7 @@ void mainWindow::loadMenu() {
 
 void mainWindow::setup(int selectedId ,QString userType) {
     ui.pushButtonEditUsers->setVisible(userType == "admin");
-    ui.pushButtonEditMenu->setVisible(userType == "admin" || userType == "cook");
+    ui.checkBoxEditMode->setVisible(userType == "admin" || userType == "cook");
 
     loadMenu();
     loadUser(selectedId);
@@ -188,6 +189,8 @@ void mainWindow::tableWidgetMenu_doubleClicked(int row, int column) {
 }
 
 void mainWindow::listWidgetOrders_doubleClicked(QListWidgetItem* item) {
+    if(ui.checkBoxEditMode->isChecked())
+		return;
 
     QString order = item->text();
 	QStringList orderList = order.split('\t');
@@ -275,4 +278,51 @@ QString mainWindow::tableDay(QTableWidget* sender) {
 void mainWindow::pushButtonEditUsers_clicked() {
 	editUsers* editusers = new editUsers;
 	editusers->show();
+}
+
+void mainWindow::checkBoxEditMenu_stateChanged(int state) {
+    if (state == Qt::Checked) {
+		enableFoodQuantityEditing(true);
+	}
+    else {
+		enableFoodQuantityEditing(false);
+
+        updateDatabaseMenu();
+    }
+}
+
+void mainWindow::enableFoodQuantityEditing(bool enable) {
+	QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
+
+    for (QTableWidget* currentWidget : tableWidgets) {
+        if (enable) {
+            currentWidget->setSelectionBehavior(QAbstractItemView::SelectItems);
+            currentWidget->setEditTriggers(QAbstractItemView::CurrentChanged);
+        }
+        else {
+            currentWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+            currentWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        }
+    }
+}
+
+void mainWindow::updateDatabaseMenu() {
+    QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
+
+    for (QTableWidget* currentTable : tableWidgets) {
+        	QString day = tableDay(currentTable);
+
+            for (int i = 0; i < currentTable->rowCount(); i++) {
+			    QString course = currentTable->item(i, 0)->text();
+			    QString name = currentTable->item(i, 1)->text();
+			    int quantity = currentTable->item(i, 2)->text().toInt();
+			    double price = currentTable->item(i, 3)->text().toDouble();
+
+			    int index = i % databaseMenu[day][course].size();
+
+			    databaseMenu[day][course][index].quantity = quantity;
+			    databaseMenu[day][course][index].price = price;
+                databaseMenu[day][course][index].name = name;
+		}
+    }
 }
