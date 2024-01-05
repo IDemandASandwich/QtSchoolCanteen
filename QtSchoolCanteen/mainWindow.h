@@ -6,6 +6,7 @@
 #include "database.h"
 #include "loginWindow.h"
 #include "editUsers.h"
+#include <QDir>
 
 class mainWindow : public QMainWindow
 {
@@ -31,6 +32,7 @@ private slots:
     void listWidgetOrders_doubleClicked(QListWidgetItem* item);
     void pushButtonEditUsers_clicked();
     void checkBoxEditMenu_stateChanged(int state);
+    void pushButtonClearOrders_clicked();
 
 private:
     Ui::mainWindowClass ui;

@@ -7,14 +7,16 @@ mainWindow::mainWindow(int selectedId, QString userType, QWidget* parent)
 
     setup(selectedId, userType);
 
-    connect(ui.pushButtonLogOut, SIGNAL(clicked()), this, SLOT(pushButtonLogOut_clicked()));
-
     connect(ui.tableWidgetMonday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
     connect(ui.tableWidgetTuesday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
     connect(ui.tableWidgetWednesday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
     connect(ui.tableWidgetThursday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
     connect(ui.tableWidgetFriday, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(tableWidgetMenu_doubleClicked(int, int)));
+     
+    connect(ui.pushButtonLogOut, SIGNAL(clicked()), this, SLOT(pushButtonLogOut_clicked()));
     connect(ui.pushButtonEditUsers, SIGNAL(clicked()), this, SLOT(pushButtonEditUsers_clicked()));
+    connect(ui.pushButtonClearOrders, SIGNAL(clicked()), this, SLOT(pushButtonClearOrders_clicked()));
+
     connect(ui.checkBoxEditMode, SIGNAL(stateChanged(int)), this, SLOT(checkBoxEditMenu_stateChanged(int)));
 
     connect(ui.listWidgetOrder, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(listWidgetOrders_doubleClicked(QListWidgetItem*)));
@@ -81,7 +83,10 @@ void mainWindow::setup(int selectedId ,QString userType) {
 }
 
 void mainWindow::saveCurrentUserOrder(){
-    QString fileName = "items/" + currentUser->getName() + "Order.csv";
+    if(ui.listWidgetOrder->count() == 0)
+		return;
+
+    QString fileName = "items/" + currentUser->getName() + "-Order.csv";
 
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -99,7 +104,7 @@ void mainWindow::saveCurrentUserOrder(){
 
 void mainWindow::loadCurrentUserOrder() {
 
-	QString fileName = "items/" + currentUser->getName() + "Order.csv";
+	QString fileName = "items/" + currentUser->getName() + "-Order.csv";
 
 	QFile file(fileName);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -324,5 +329,30 @@ void mainWindow::updateDatabaseMenu() {
 			    databaseMenu[day][course][index].price = price;
                 databaseMenu[day][course][index].name = name;
 		}
+    }
+}
+
+void mainWindow::pushButtonClearOrders_clicked() {
+    QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
+
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Clear orders", "Are you sure you want to clear orders?", QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes)
+    {
+        ui.listWidgetOrder->clear();
+
+        for (QTableWidget* currentTable : tableWidgets) {
+            QString day = tableDay(currentTable);
+
+            for (int i = 0; i < currentTable->rowCount(); i++)
+                currentTable->showRow(i);
+        }
+
+        QDir directory("items");
+        QStringList files = directory.entryList(QStringList() << "*-Order.csv", QDir::Files);
+
+        for (QString file : files) {
+            QFile::remove("items/" + file);
+        }
     }
 }
