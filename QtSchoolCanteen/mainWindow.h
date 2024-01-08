@@ -36,6 +36,7 @@ private slots:
 
 private:
     Ui::mainWindowClass ui;
+    QList<QTableWidget*> tableWidgets;
     QVector<user*>& databaseUser;
     user* currentUser;
     menuDataType& databaseMenu;

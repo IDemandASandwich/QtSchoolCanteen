@@ -37,7 +37,6 @@ void mainWindow::loadUser(int selectedId) {
 }
 
 void mainWindow::loadMenu() {
-    QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
     QList<int> columnWidths = { 350, 55, 60 };
 
     QStringList header = {"Course", "Name", "Quantity" , "Price"};
@@ -60,7 +59,14 @@ void mainWindow::loadMenu() {
                 currentWidget->setItem(j, 0, new QTableWidgetItem(Course[currentCourse]));
                 currentWidget->setItem(j, 1, new QTableWidgetItem(foodList[j].name));
                 currentWidget->setItem(j, 2, new QTableWidgetItem(QString::number(foodList[j].quantity)));
-                currentWidget->setItem(j, 3, new QTableWidgetItem(QString::number(foodList[j].price)));
+
+                if (currentUser->getUserType() == "student") {
+                    double discount = 1 - static_cast<double>(currentUser->getDiscount()) / 100;
+                    double newPrice = round(foodList[j].price * discount * 100) / 100;
+                    currentWidget->setItem(j, 3, new QTableWidgetItem(QString::number(newPrice)));
+                }
+				else
+					currentWidget->setItem(j, 3, new QTableWidgetItem(QString::number(foodList[j].price)));
             }
         }
 
@@ -77,9 +83,12 @@ void mainWindow::loadMenu() {
 void mainWindow::setup(int selectedId ,QString userType) {
     ui.pushButtonEditUsers->setVisible(userType == "admin");
     ui.checkBoxEditMode->setVisible(userType == "admin" || userType == "cook");
+    ui.pushButtonClearOrders->setVisible(userType == "admin" || userType == "cook");
 
-    loadMenu();
+    tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
+
     loadUser(selectedId);
+    loadMenu();
 }
 
 void mainWindow::saveCurrentUserOrder(){
@@ -249,7 +258,6 @@ int mainWindow::findListWidgetIndexInTable(QListWidgetItem* item) {
 }
 
 QTableWidget* mainWindow::currentTable(QString day) {
-    QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
 
     if (day == "Monday")
         return tableWidgets[0];
@@ -297,7 +305,6 @@ void mainWindow::checkBoxEditMenu_stateChanged(int state) {
 }
 
 void mainWindow::enableFoodQuantityEditing(bool enable) {
-	QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
 
     for (QTableWidget* currentWidget : tableWidgets) {
         if (enable) {
@@ -312,7 +319,6 @@ void mainWindow::enableFoodQuantityEditing(bool enable) {
 }
 
 void mainWindow::updateDatabaseMenu() {
-    QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
 
     for (QTableWidget* currentTable : tableWidgets) {
         	QString day = tableDay(currentTable);
@@ -333,7 +339,6 @@ void mainWindow::updateDatabaseMenu() {
 }
 
 void mainWindow::pushButtonClearOrders_clicked() {
-    QList<QTableWidget*> tableWidgets = { ui.tableWidgetMonday, ui.tableWidgetTuesday, ui.tableWidgetWednesday, ui.tableWidgetThursday, ui.tableWidgetFriday };
 
     QMessageBox::StandardButton reply = QMessageBox::question(this, "Clear orders", "Are you sure you want to clear orders?", QMessageBox::Yes | QMessageBox::No);
 
