@@ -1,6 +1,6 @@
 Day,Course,Food Name,Price,Count
 Friday,Breakfast,Blueberry Muffins with Greek Yogurt,4.95,2
-Friday,Breakfast,Breakfast BLT Sandwich,5.5,1
+Friday,Breakfast,Breakfast BLT Sandwich,5.5,3
 Friday,Breakfast,Banana Walnut Bread with Honey,4.25,2
 Friday,Breakfast,Smoked Salmon Bagel with Cream Cheese,6.75,1
 Friday,Breakfast,Peach and Raspberry Smoothie,5.8,2
@@ -14,10 +14,10 @@ Friday,Lunch,Salmon Teriyaki with Brown Rice,13.5,1
 Friday,Lunch,Chicken Fajitas with Peppers and Onions,11.99,2
 Friday,Lunch,Spinach and Feta Stuffed Chicken Breast,12.95,1
 Friday,Lunch,Vegetarian Lentil Soup with Crusty Bread,8.8,2
-Monday,Breakfast,Scrambled Eggs with Spinach and Feta,4.99,3
+Monday,Breakfast,Scrambled Eggs with Spinach and Feta,4.99,2
 Monday,Breakfast,Greek Yogurt Parfait with Granola,3.5,1
-Monday,Breakfast,Strawberry Smoothie,5.5,1
-Monday,Breakfast,Avocado Toast with Cherry Tomatoes,6.25,2
+Monday,Breakfast,Strawberry Smoothie,5.5,2
+Monday,Breakfast,Avocado Toast with Cherry Tomatoes,6.25,4
 Monday,Breakfast,Blueberry Pancakes with Maple Syrup,4.75,1
 Monday,Dinner,Spaghetti Bolognese,9.25,1
 Monday,Dinner,Chicken Teriyaki with Steamed Rice,10.99,2

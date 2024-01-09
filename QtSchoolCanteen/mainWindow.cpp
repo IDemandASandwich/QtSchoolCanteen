@@ -32,8 +32,6 @@ void mainWindow::loadUser(int selectedId) {
 
     ui.lineEditUser->setText(currentUser->getName());
     ui.doubleSpinBoxCredit->setValue(currentUser->getCredit());
-
-    loadCurrentUserOrder();
 }
 
 void mainWindow::loadMenu() {
@@ -78,6 +76,8 @@ void mainWindow::loadMenu() {
 
         currentDay++;
     }
+
+    loadCurrentUserOrder();
 }
 
 void mainWindow::setup(int selectedId ,QString userType) {
